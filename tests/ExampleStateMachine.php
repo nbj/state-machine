@@ -40,4 +40,14 @@ class ExampleStateMachine extends StateMachine
      * @var string $initialStateIdentifier
      */
     protected $initialStateIdentifier = 'stateOne';
+
+    /**
+     * Example of change modifier
+     *
+     * @return bool
+     */
+    protected function changeToStateFour()
+    {
+        return (bool) $this->objectChangingState->canChangeState;
+    }
 }

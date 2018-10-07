@@ -151,10 +151,20 @@ abstract class StateMachine
      */
     protected function handleRegularStateChange()
     {
+        if (!array_key_exists($this->fromState->getStateIdentifier(), $this->stateTransitions)) {
+            return false;
+        }
+
         $allowedStates = $this->stateTransitions[$this->fromState->getStateIdentifier()];
 
         if (!in_array($this->toState->getStateIdentifier(), $allowedStates)) {
             return false;
+        }
+
+        $method = sprintf('changeTo%s', ucfirst($this->toState->getStateIdentifier()));
+
+        if (method_exists($this, $method)) {
+            return $this->$method();
         }
 
         return true;

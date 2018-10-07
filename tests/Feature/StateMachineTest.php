@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Tests\Example;
 use Tests\StateOne;
 use Tests\StateTwo;
+use Tests\StateFour;
 use Tests\StateThree;
 use Tests\ExampleStateMachine;
 use PHPUnit\Framework\TestCase;
@@ -90,5 +91,28 @@ class StateMachineTest extends TestCase
         $this->expectExceptionMessage('State change from [stateOne] to [stateThree] is not allowed');
 
         $object->setState(new StateThree);
+    }
+
+    /** @test */
+    public function it_takes_changeTo_methods_into_account()
+    {
+        $objectA = new Example;
+        $objectA->setState(new StateOne);
+        $objectA->canChangeState = true;
+        $this->assertInstanceOf(StateOne::class, $objectA->getState());
+
+        $objectA->setState(new StateFour);
+        $this->assertInstanceOf(StateFour::class, $objectA->getState());
+
+        $objectB = new Example;
+        $objectB->setState(new StateOne);
+        $objectB->canChangeState = false;
+        $this->assertInstanceOf(StateOne::class, $objectB->getState());
+
+        $this->expectException(StateChangeNotAllowed::class);
+        $this->expectExceptionMessage('State change from [stateOne] to [stateFour] is not allowed');
+
+        $objectB->setState(new StateFour);
+        $this->assertInstanceOf(StateOne::class, $objectB->getState());
     }
 }
