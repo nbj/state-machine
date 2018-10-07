@@ -43,7 +43,7 @@ class StateMachineTest extends TestCase
         $this->assertNull($object->getState());
 
         $this->expectException(StateChangeNotAllowed::class);
-        $this->expectExceptionMessage('State change from [null] to [stateTwo] is not allowed.');
+        $this->expectExceptionMessage('State change from [null] to [stateTwo] is not allowed');
 
         $object->setState(new StateTwo);
 
@@ -87,7 +87,7 @@ class StateMachineTest extends TestCase
         $this->assertInstanceOf(StateOne::class, $object->getState());
 
         $this->expectException(StateChangeNotAllowed::class);
-        $this->expectExceptionMessage('State change from [stateOne] to [stateThree] is not allowed.');
+        $this->expectExceptionMessage('State change from [stateOne] to [stateThree] is not allowed');
 
         $object->setState(new StateThree);
     }

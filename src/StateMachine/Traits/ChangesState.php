@@ -65,7 +65,7 @@ trait ChangesState
 
         if (!static::$stateMachine->allows($this->state)->to($state)->for($this)) {
             $message = sprintf(
-                "State change from [%s] to [%s] is not allowed.",
+                "State change from [%s] to [%s] is not allowed",
                 $this->state ? $this->state->getStateIdentifier() : 'null',
                 $state->getStateIdentifier()
             );
